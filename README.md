@@ -17,3 +17,20 @@ Contoh: `dts4a-01-final`
 ## Branching, commit
 
 Branch dapat sesuai dengan kebutuhan dan kesepakatan bersama dalam pair, namun hasil akhirnya harus di merge ke branch `main` dan di push ke Github. Pastikan hasil akhir kode sudah ter-push!
+
+# Final Project
+
+![](https://gfycat.com/unluckyspotlessbichonfrise)
+
+## Live App
+
+Live app bisa di akses [disini](https://chillix-rea4c-16.web.app)
+
+## Deskripsi
+
+Aplikasi platform streaming movie kekinian dengan fitur register, login, watch (trailer) dan juga memiliki fitur pencarian. Sumber data dari [The Movie DB](developers.themoviedb.org/3/)
+Dengan menggunakan framework/library: CRA, Axios, Firebase, Tailwind dll.
+
+Team:
+`DTS4C-16` [Septiyadi Sistya](https://github.com/septiyadi396)
+`DTS4C-16` [T Reza Syahrial Putra](https://github.com/teukureza29)
