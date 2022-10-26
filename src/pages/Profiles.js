@@ -5,7 +5,7 @@ import P2 from './../assets/user_profile/ProfilePicture2.png'
 import P3 from './../assets/user_profile/ProfilePicture3.png'
 import P4 from './../assets/user_profile/ProfilePicture4.png'
 import Header from "./../components/Header"
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 
 const users = [
     {
@@ -46,7 +46,7 @@ const Profile = () => {
                         </div>
                         ))}
                 </div>
-                <Button variant="outlined" className="btn">Manage Profiles</Button>
+                <button variant="outlined" className="btn">Manage Profiles</button>
             </div>
         </div>
     )

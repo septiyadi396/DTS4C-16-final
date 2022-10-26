@@ -1,114 +1,80 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import { signingIn } from './../../utils/firebase/login'
-import logo from "./../../assets/logo.png"
-
-import { 
-    TextField, 
-    Button, 
-    FormControlLabel, 
-    Checkbox, 
-    Divider, 
-    Card, 
-    CardMedia, 
-    Grid,
-    CardContent,
-    Typography
-} from "@mui/material"
+import { UserAuth } from '../../context/AuthContext';
+import BgImage from "./../../utils/bgImage";
 
 const Login = () => {
+    const bg = BgImage()
     const navigate = useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState('')
+    const { user, logIn } = UserAuth();
 
-    const signIn = async () => {
-        console.log('data signin',email,password);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('')
         try {
-            const authorizing = await signingIn(email, password)
-            console.log('afgusd',authorizing);
-            if (authorizing.operationType == 'signIn') {
-                localStorage.setItem('access_token', authorizing.user.accessToken)
-                navigate('/profile')
-            }
-            else (
-                alert('invalid email or password')
-            )
+            await logIn(email, password)
+            navigate('/')
         } catch (error) {
-            console.log('error authorizing', error);
+            console.log(error);
+            setError(error.message)
         }
-    }
+    };
 
     return (
-        <div className="login">
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center" 
-                justify="center"
-                sx={{ minHeight: '100vh', marginTop:'5vh' }}
-                >
-
-                <Grid item xs={3}>
-                    <Card sx={{ maxWidth: 345 }} className="loginCard">
-                        <CardMedia component="img" image={logo} height="350" alt="Logo"/>
-                        {/* <h1>Sign In</h1> */}
-                        <CardContent>
-                        {/* <CardContent sx={{ backgroundColor: '#141414'}}> */}
-                            <form>
-                                <TextField
+        <div className="w-full">
+            <img
+                className='hidden sm:block absolute w-full h-screen object-cover'
+                src={bg.bgImage}
+                alt='/'
+            />
+            <div className='bg-black/40 fixed top-0 left-0 w-full h-screen'>
+                <div className='fixed w-full px-4 py z-50'>
+                    <div className='max-w-[450px] h-[600px] mx-auto bg-black/75 text-white'>
+                        <div className='max-w-[320px] mx-auto py-16'>
+                            <h1 className='text-3xl font-bold'>Sign In</h1>
+                            {error ? <p className='p-3 bg-red-400 my-2'>{error}</p> : null}
+                            <form
+                                onSubmit={handleSubmit}
+                                className='w-full flex flex-col py-4'
+                            >
+                                <input
                                     name="email"
-                                    className="email"
                                     type="email"
-                                    variant="filled"
+                                    // variant="filled"
+                                    placeholder="name@mail.com"
                                     value={email}
                                     onChange={ e => setEmail(e.target.value)}
                                     fullWidth={true}
-                                    placeholder='name@email.com'
+                                    required
                                     autoFocus
+                                    className='p-3 my-2 bg-gray-700 rouded'
+                                    autoComplete='email'
                                 />
-
-                                <TextField
+                                <input
                                     name="password"
-                                    className="password"
                                     type="password"
-                                    variant="filled"
+                                    // variant="filled"
                                     placeholder="password"
                                     value={password}
                                     onChange={ e => setPassword(e.target.value)}
                                     fullWidth={true}
+                                    required
+                                    className='p-3 my-2 bg-gray-700 rouded'
+                                    autoComplete='current-password'
                                 />
-
-                                <Button onClick={signIn} variant="outlined" sx={{width:'100%', marginTop:'1em', marginBottom:'1em'}}>Sign In</Button>
-
-                                <div className="tambahan">
-                                    {/* <FormControlLabel
-                                        style={{ marginLeft: "-12px" }}
-                                        control={
-                                        <Checkbox style={{ color: "rgb(229, 9, 20)" }} name="checkedB" />
-                                        }
-                                        label="Remember Me"
-                                    /> */}
-                                    <Grid 
-                                        container
-                                        direction="row"
-                                        justifyContent="space-between"
-                                        alignItems="center">
-                                            <Grid item>
-                                                <Link to={'/reset'}>Forget Password</Link>
-                                            </Grid>
-                                            <Grid item>
-                                                <Link to={'/register'}>Sign Up</Link>
-                                            </Grid>
-                                        </Grid>
-                                    {/* <Divider/> */}
+                                <button className='bg-red-600 py-3 my-6 rounded font-bold'>Sign In</button>
+                                <div className='flex justify-between items-center text-sm text-gray-600'>
+                                    <p className="text-white"><Link to={'/reset'}>Forget Password</Link></p>
+                                    <p className="text-white"><Link to={'/register'}>Sign Up</Link></p>
                                 </div>
                             </form>
-                            
-                        </CardContent>
-                    </Card>
-                </Grid>      
-            </Grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

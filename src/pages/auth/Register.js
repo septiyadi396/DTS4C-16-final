@@ -1,127 +1,83 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import { TextField, Button, Divider, Grid, Card, CardContent, CardMedia } from "@mui/material"
-import { signingUp } from './../../utils/firebase/register'
-import logo from "./../../assets/logo.png"
+import { UserAuth } from '../../context/AuthContext';
+import BgImage from "./../../utils/bgImage";
 
 const Register = () => {
+    const bg = BgImage()
     const navigate = useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { user, register } = UserAuth();
 
-    const signUp = async () => {
-        console.log('data signup', email,password);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const authorizing = await signingUp(email, password)
-            if (authorizing.message === "Firebase: Error (auth/email-already-in-use).") {
-                console.log('Registration filed, user exist');
-                navigate('/login')
-            }
-            if (authorizing.operationType === "signIn") {
-                alert('Registration succes, please login')
-                navigate('/login')
-            }
+            await register(email, password);
+            navigate('/')
         } catch (error) {
-            console.log('error authorizing', error);
+            console.log(error);
         }
-    }
+    };
 
     return (
-        <>
-        <div className="register">
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center" 
-                justify="center"
-                sx={{ minHeight: '100vh', marginTop:'5vh' }}
-                >
-
-                <Grid item xs={3}>
-                    <Card sx={{ maxWidth: 345 }} className="registerCard">
-                        <CardMedia component="img" image={logo} height="350" alt="Logo"/>
-                        {/* <h1>Sign In</h1> */}
-                        <CardContent>
-                        {/* <CardContent sx={{ backgroundColor: '#141414'}}> */}
-                            <form>
-                                <TextField
+        <div className="w-full">
+            <img
+                className='hidden sm:block absolute w-full h-screen object-cover'
+                src={bg.bgImage}
+                alt='/'
+            />
+            <div className='bg-black/40 fixed top-0 left-0 w-full h-screen'>
+                <div className='fixed w-full px-4 py z-50'>
+                    <div className='max-w-[450px] h-[600px] mx-auto bg-black/75 text-white'>
+                        <div className='max-w-[320px] mx-auto py-16'>
+                            <h1 className='text-3xl font-bold'>Sign Up</h1>
+                            <form
+                                onSubmit={handleSubmit}
+                                className='w-full flex flex-col py-4'
+                            >
+                                <input
                                     name="email"
-                                    className="email"
                                     type="email"
-                                    variant="filled"
+                                    // variant="filled"
                                     placeholder="name@mail.com"
                                     value={email}
                                     onChange={ e => setEmail(e.target.value)}
                                     fullWidth={true}
                                     required
                                     autoFocus
+                                    className='p-3 my-2 bg-gray-700 rouded'
+                                    autoComplete='email'
                                 />
-
-                                <TextField
+                                <input
                                     name="password"
-                                    className="password"
                                     type="password"
-                                    variant="filled"
+                                    // variant="filled"
                                     placeholder="password"
                                     value={password}
                                     onChange={ e => setPassword(e.target.value)}
                                     fullWidth={true}
                                     required
+                                    className='p-3 my-2 bg-gray-700 rouded'
+                                    autoComplete='current-password'
                                 />
-
-                                <Button onClick={signUp} variant="outlined" sx={{width:'100%', marginTop:'1em', marginBottom:'1em'}}>Sign Up</Button>
-
-                                <div className="tambahan" style={{textAlign: 'center'}}>
-                                    <Divider/>
-                                    <Link to={'/login'}>Sign In</Link>
+                                <button className='bg-red-600 py-3 my-6 rounded font-bold'>Sign Up</button>
+                                <div className='flex justify-between items-center text-sm text-gray-600'>
+                                    <p className="text-white"><input className='mr-2' type='checkbox' />Remember me</p>
+                                    <p className="text-white">Need Help?</p>
                                 </div>
+                                <p className='py-8'>
+                                <span className='className="text-white"'>
+                                    Already subscribed to Netflix?
+                                </span>{' '}
+                                <Link to='/login'>Sign In</Link>
+                                </p>
                             </form>
-                            
-                        </CardContent>
-                    </Card>
-                </Grid>      
-            </Grid>
-        </div>
-            {/* <div className="register">
-                <div className="registerCard">
-                    <img src={logo} alt="Logo"/>
-                    <h1>Sign Up</h1>
-
-                    <form>
-                        <TextField
-                            name="email"
-                            className="email"
-                            type="email"
-                            variant="filled"
-                            placeholder="name@mail.com"
-                            value={email}
-                            onChange={ e => setEmail(e.target.value)}
-                            required
-                            autoFocus
-                        />
-
-                        <TextField
-                            name="password"
-                            className="password"
-                            type="password"
-                            variant="filled"
-                            placeholder="password"
-                            value={password}
-                            onChange={ e => setPassword(e.target.value)}
-                            required
-                        />
-
-                        <Button onClick={signUp}>Sign Up</Button>
-
-                        <div className="tambahan">
-                            <Divider/>
-                            <Link to={'/login'}>Sign In</Link>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div> */}
-        </>
+            </div>
+        </div>
     )
 }
 

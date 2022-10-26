@@ -1,179 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "./../assets/logo.png"
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
+import { UserAuth } from "./../context/AuthContext";
 
 const pages = ['Home', 'Series', 'Movies', 'New and Popular', 'My List'];
 const settings = ['Logout'];
 
 const Header = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const { user, logOut } = UserAuth();
+    const navigate = useNavigate();
+    // console.log(user.email)
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = (data) => {
-        console.log('data',data);
-        setAnchorElUser(null);
+    const handleLogOut = async () => {
+        try {
+            await logOut();
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
-        // <div className="headerSection" style={{backgroundColor:'#141414'}}>
-        //     <header
-        //     className="header" style={{height: '8vh', padding: '1em'}}
-        //     >
-        //         <a href="/" className="logoBtn">
-        //             <img src={logo} alt="Logo" className="logo" style={{height: '8vh'}} />
-        //         </a>
-
-        //         <a href="/" className="userImg">
-        //             {/* <img src={users[0].photo} alt="User image" /> */}
-        //         </a>
-        //     </header>
-        // </div>
-        <AppBar position="static" sx={{backgroundColor:"#141414"}}>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    {/* start desktop */}
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                    Movie
-                    </Typography>
-        
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    {/* end desktop */}
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-                    {/* start smol device (mobile) */}
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Movie
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                            {page}
-                            </Button>
-                        ))}
-                    </Box>
-        
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" variant="square"/>
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    {/* end smol devive (mobile) */}
-                </Toolbar>
-            </Container>
-        </AppBar>
+        <div className="flex item-center justify-between p-4 z-10">
+            <a href="/" className="logo">
+                <img src={logo} alt="Logo" className="logo" style={{height: '8vh'}} />
+            </a>
+            { (user?.email) ? (
+                <div className="header" style={{height: '8vh', padding: '1em'}}>
+                    <button className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white" onClick={handleLogOut}>Sign Out</button>
+                </div>
+            ) : (
+                <div className="header" style={{height: '8vh', padding: '1em'}}>
+                    <Link to={'/login'}>
+                        <button className="bg-red-600 px-6 py-2 mx-2 rounded cursor-pointer text-white">Sign In</button>
+                    </Link>
+                    <Link to={'/register'}>
+                        <button className="bg-red-600 px-6 py-2 mx-2 rounded cursor-pointer text-white">Sign Up</button>
+                    </Link>
+                </div>
+            )}
+        </div>
     )
 }
 
