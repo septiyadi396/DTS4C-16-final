@@ -23,14 +23,10 @@ function Navbar() {
       </Link>
       { (user?.email) ? (
         <div>
-          <div>
-              <Link to={'/search'}>
-                <span>Search</span>
-              </Link>
-          </div>
-          <div>
+            <Link to={'/search'}>
+              <button className='bg-red-600 px-6 py-2 cursor-pointer'>Search</button>
+            </Link>
             <button className='bg-red-600 px-6 py-2 cursor-pointer' onClick={handleLogOut}>Sign Out</button>
-          </div>
         </div>
       ) : (
         <div>
