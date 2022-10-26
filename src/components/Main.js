@@ -1,15 +1,27 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import requests from '../Request';
 
 
 const Main = () => {
+  const baseUrl =  process.env.REACT_APP_THEMOVIEDB_BASE_URL
+  const apiKey = process.env.REACT_APP_THEMOVIEDB_V3
+  const endpoint = '/movie/popular'
   const [movies, setMovies] = useState([]);
 
   const movie = movies[Math.floor(Math.random() * movies.length)];
+  console.log('main',movie);
   
+  const api = baseUrl+endpoint
   useEffect(() => {
-    axios.get(requests.requestPopular).then((response) =>{
+    axios.get(api, {
+      params : {
+          api_key: apiKey,
+          language: 'en-US',
+          page:'1',
+      }
+    }).then((response) =>{
       setMovies(response.data.results);
     })
     
@@ -42,19 +54,21 @@ const Main = () => {
       <div className='w-full h-full'>
         <div className='absolute w-full h-[600px] bg-gradient-to-r from-black'></div>
         <img
-          className='w-full h-full object-cover'
+          className='w-full h-[600px] object-cover'
           src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
           alt={movie?.title}
         />
         <div className='absolute w-full top-[20%] p-4 md:p-8'>
-          <h1 className='text-3xl md:text-5xl font-bold'>{movie?.title}</h1>
+          <h1 className='text-3xl md:text-5xl font-bold text-white'>{movie?.title}</h1>
           <div className='my-4'>
-            <button className='border bg-gray-300 text-black border-gray-300 py-2 px-5'>
-              Play
-            </button>
-            <button className='border text-white border-gray-300 py-2 px-5 ml-4'>
+            <Link to={`/${movie?.id}`}>
+              <button className='border bg-gray-300 text-black border-gray-300 py-2 px-5'>
+                Play
+              </button>
+            </Link>
+            {/* <button className='border text-white border-gray-300 py-2 px-5 ml-4'>
               Watch Later
-            </button>
+            </button> */}
           </div>
           <p className='text-gray-400 text-sm'>
             Released: {movie?.release_date}

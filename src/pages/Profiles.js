@@ -4,7 +4,7 @@ import P1 from './../assets/user_profile/ProfilePicture1.png'
 import P2 from './../assets/user_profile/ProfilePicture2.png'
 import P3 from './../assets/user_profile/ProfilePicture3.png'
 import P4 from './../assets/user_profile/ProfilePicture4.png'
-import Header from "./../components/Header"
+import Navbar from "./../components/Navbar"
 // import Button from '@mui/material/Button';
 
 const users = [
@@ -33,7 +33,7 @@ const users = [
 const Profile = () => {
     return (
         <div className="profileSelector">
-            <Header/>
+            <Navbar/>
             <div className="profileSelection" style={{ textAlign: 'center', position:'relative', flexWrap:'wrap'}}>
                 <h1 style={{color: 'white'}}>Who's watching?</h1>
                 <div className="profileList" style={{display: 'flex', justifyContent:'center'}}>

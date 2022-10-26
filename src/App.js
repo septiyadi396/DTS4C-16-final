@@ -1,26 +1,28 @@
 import Navbar from './components/Navbar';
-import logo from './logo.svg';
-import './App.css';
 import { Route, Routes } from "react-router-dom";
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Home from './pages/Home'
 import Profile from './pages/Profiles';
-import Header from './components/Header';
 import RouteProtect from './components/RouteProtect';
+import Watch from './components/Watch';
+import Footer from './components/Footer';
+import Search from './components/Search';
 
 function App() {
   return (
     <>
       <Navbar/>
-      <Header/>
+      {/* <Header/> */}
       <Routes>
         <Route path='/' element={<RouteProtect><Home /></RouteProtect>} />
         <Route path='/login' element={<Login />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/register' element={<Register />} />
-        {/* <Routes path='/watch:watchId' element={< />} /> */}
+        <Route path='/search' element={<Search />} />
+        <Route path='/:watchId' element={<Watch />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
