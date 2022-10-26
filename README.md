@@ -20,7 +20,7 @@ Branch dapat sesuai dengan kebutuhan dan kesepakatan bersama dalam pair, namun h
 
 # Final Project
 
-![](https://gfycat.com/unluckyspotlessbichonfrise)
+![app](https://thumbs.gfycat.com/UnluckySpotlessBichonfrise-size_restricted.gif)
 
 ## Live App
 
@@ -28,9 +28,9 @@ Live app bisa di akses [disini](https://chillix-rea4c-16.web.app)
 
 ## Deskripsi
 
-Aplikasi platform streaming movie kekinian dengan fitur register, login, watch (trailer) dan juga memiliki fitur pencarian. Sumber data dari [The Movie DB](developers.themoviedb.org/3/)
+Aplikasi platform streaming movie kekinian dengan fitur register, login, watch (trailer) dan juga memiliki fitur pencarian. Sumber data dari [The Movie DB](https://developers.themoviedb.org/3/) <br/>
 Dengan menggunakan framework/library: CRA, Axios, Firebase, Tailwind dll.
 
-Team:
-`DTS4C-16` [Septiyadi Sistya](https://github.com/septiyadi396)
+Team: <br />
+`DTS4C-16` [Septiyadi Sistya](https://github.com/septiyadi396) <br />
 `DTS4C-16` [T Reza Syahrial Putra](https://github.com/teukureza29)
